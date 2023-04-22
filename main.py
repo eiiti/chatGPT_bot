@@ -1,8 +1,8 @@
 import os
-import openai
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
+import openai
 import streamlit as st
 
 # LINE APIの初期化
@@ -15,35 +15,11 @@ openai.api_key = os.environ["OPENAI_API_KEY"]
 # Streamlitアプリケーションのコード
 st.title("LINE Bot with OpenAI ChatGPT")
 
-# ChatGPT APIを呼び出して返信を生成する関数
-def generate_response(prompt):
-    response = openai.Completion.create(
-        engine="text-davinci-002",
-        prompt=prompt,
-        max_tokens=150,
-        n=1,
-        stop=None,
-        temperature=0.5,
-    )
-
-    message = response.choices[0].text.strip()
-    return message
-
 # メッセージイベントの処理
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    # ユーザーからのメッセージを取得
-    user_message = event.message.text
-
-    # OpenAI APIを使って、ユーザーのメッセージに対する返信を生成
-    prompt = f"ユーザー: {user_message}\nChatGPT:"
-    gpt_response = generate_response(prompt)
-
-    # 返信をLINE botからユーザーに送信
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=gpt_response)
-    )
+    # OpenAI APIを呼び出し、結果をユーザーに返信するコードをここに追加します。
+    pass
 
 # Webhookエンドポイントの処理
 def webhook(request):
